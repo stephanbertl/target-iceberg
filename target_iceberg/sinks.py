@@ -40,9 +40,7 @@ class IcebergSink(BatchSink):
             context: Stream partition or context dictionary.
         """
         # Load the Iceberg catalog
-        region = fs.resolve_s3_region(self.config.get("s3_bucket"))
-        self.logger.info(f"AWS Region: {region}")
-
+        
         catalog_name = self.config.get("iceberg_catalog_name")
         self.logger.info(f"Catalog name: {catalog_name}")
 
@@ -51,6 +49,9 @@ class IcebergSink(BatchSink):
 
         iceberg_rest_uri = self.config.get("iceberg_rest_uri")
         self.logger.info(f"Iceberg REST URI: {iceberg_rest_uri}")
+        
+        region = self.config.get("s3_region")
+        self.logger.info(f"AWS Region: {region}")
 
         catalog = load_catalog(
             catalog_name,
